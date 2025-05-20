@@ -1,7 +1,6 @@
 <footer class="main-footer">
     <div class="footer-container container">
         <div class="footer-grid">
-            <!-- Add localized content using __() helper -->
             <div class="footer-section">
                 <h4 class="footer-heading">{{ __('Quick Links') }}</h4>
                 <ul class="footer-links">

@@ -42,10 +42,9 @@ class RegistrationController extends Controller
                     ->subject(__('New Registered User'));
         });
 
-        return redirect()->route('registration.success')
-                            ->with('success', __('registration.success', ['name' => $user->full_name]));
+        $user->save();
 
-            return redirect()->route('registration.success')
+        return redirect()->route('registration.success')
                             ->with('success', __('registration.success', ['name' => $user->full_name]));
 
         } catch (Exception $e) {
