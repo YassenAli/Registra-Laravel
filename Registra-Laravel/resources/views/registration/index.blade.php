@@ -4,99 +4,347 @@
 
 @section('content')
 <div class="content-wrapper">
+    <main class="registration-main form-page-container">
+        <div class="registration-container animate__animated animate__fadeIn form-wrapper">
+            @if(session('error'))
+                <div class="alert alert-danger">{{ session('error') }}</div>
+            @endif
 
-<main class="registration-main form-page-container">
-<div class="registration-container animate__animated animate__fadeIn form-wrapper">
-    @if(session('error'))
-        <div class="alert alert-danger">{{ session('error') }}</div>
-    @endif
+            @if($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
-    <div class="form-header">
-            <h2>Register</h2>
-    </div>
-
-    <form id="registrationForm" action="{{ route('registration.submit') }}" method="POST" enctype="multipart/form-data">
-        @csrf
-
-        <div class="form-grid">
-        <!-- Form fields with localization -->
-        <div class="form-group floating-label">
-            <label for="full_name">{{ __('Full Name') }}</label>
-            <input type="text" id="full_name" name="full_name" class="form-control" required>
-            <div class="invalid-feedback" id="fullnameFeedback"></div>
-        </div>
-
-        <div class="form-group floating-label">
-            <label for="user_name">{{ __('Username') }}</label>
-            <input type="text" id="user_name" name="user_name" class="form-control" required
-                pattern="[a-zA-Z0-9_]{3,}">
-            <div class="invalid-feedback" id="usernameFeedback"></div>
-        </div>
-
-        <div class="form-group floating-label">
-            <label for="email">{{ __('Email Address') }}</label>
-            <input type="email" id="email" name="email" class="form-control" required>
-            <div class="invalid-feedback" id="emailFeedback"></div>
-            <div class="invalid-feedback" id="emailFeedback"></div>
-        </div>
-
-        <div class="form-group floating-label">
-            <label for="phone">{{ __('Phone') }}</label>
-            <input type="text" id="phone" name="phone" class="form-control" required pattern="[0-9]{10}">
-            <div class="invalid-feedback" id="phoneFeedback"></div>
-        </div>
-
-        <div class="form-group floating-label">
-            <label for="whatsapp">{{ __('WhatsApp Number') }}</label>
-            <input type="text" id="whatsapp" name="whatsapp" class="form-control"
-                    pattern="^[1-9]\d{7,14}$" required title="Include country code (e.g. 20 for Egypt)">
-            <button type="button" class="whatsapp-check" id="validateWhatsApp">
-                <i class="fab fa-whatsapp"></i> {{ __('Validate') }}
-            </button>
-            <small class="form-text text-muted">Must include country code (e.g. 20 for Egypt, 1 for USA/Canada)</small>
-            <div class="invalid-feedback" id="whatsAppFeedback"></div>
-        </div>
-
-        <div class="form-group floating-label">
-            <label for="address">{{ __('Address') }}</label>
-            <input type="text" id="address" name="address" class="form-control" required>
-            <div class="invalid-feedback" id="addressFeedback"></div>
-        </div>
-
-        <div class="form-group floating-label">
-            <label for="password">{{ __('Password') }}</label>
-            <input type="password" id="password" name="password" class="form-control" required
-                pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$">
-            <div class="password-strength">
-                <div class="strength-bar"></div>
-                <span class="strength-text"></span>
+            <div class="form-header">
+                <h2>Register</h2>
             </div>
-            <div class="invalid-feedback" id="confirmFeedback"></div>
-        </div>
 
-        <div class="form-group floating-label">
-            <label for="confirm_password">{{ __('Confirm Password') }}</label>
-            <input type="password" id="confirm_password" name="confirm_password" class="form-control" required>
-            <div class="invalid-feedback" id="confirmPasswordFeedback"></div>
-        </div>
+            <form id="registrationForm" action="{{ route('registration.submit') }}" method="POST" enctype="multipart/form-data">
+                @csrf
 
-        <div class="form-group file-upload">
-            <label class="upload-label">
-                <span class="upload-button"><i class="fas fa-cloud-upload-alt"></i> {{ __('Choose Profile Image') }}</span>
-                <span class="file-name"></span>
-                <input type="file" id="user_image" name="user_image" accept="image/*" required>
-                <div class="invalid-feedback" id="userImageFeedback"></div>
-            </label>
-        </div>
-        </div>
+                <div class="form-grid">
+                    <div class="form-group floating-label">
+                        <label for="full_name">{{ __('Full Name') }}</label>
+                        <input type="text" id="full_name" name="full_name" class="form-control @error('full_name') is-invalid @enderror" value="{{ old('full_name') }}" required>
+                        <div class="invalid-feedback" id="fullNameFeedback"></div>
+                    </div>
 
-        <div class="form-actions">
-            <button type="submit" class="submit-btn" id="submitBtn">
-                <i class="fas fa-user-plus"></i> {{ __('Register') }}
-            </button>
+                    <div class="form-group floating-label">
+                        <label for="user_name">{{ __('Username') }}</label>
+                        <input type="text" id="user_name" name="user_name" class="form-control @error('user_name') is-invalid @enderror" value="{{ old('user_name') }}" required>
+                        <div class="invalid-feedback" id="usernameFeedback"></div>
+                    </div>
+
+                    <div class="form-group floating-label">
+                        <label for="email">{{ __('Email Address') }}</label>
+                        <input type="email" id="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" required>
+                        <div class="invalid-feedback" id="emailFeedback"></div>
+                    </div>
+
+                    <div class="form-group floating-label">
+                        <label for="phone">{{ __('Phone') }}</label>
+                        <input type="text" id="phone" name="phone" class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone') }}" required>
+                        <div class="invalid-feedback" id="phoneFeedback"></div>
+                    </div>
+
+                    <div class="form-group floating-label">
+                        <label for="whatsapp">{{ __('WhatsApp Number') }}</label>
+                        <input type="text" id="whatsapp" name="whatsapp" class="form-control @error('whatsapp') is-invalid @enderror" value="{{ old('whatsapp') }}" required>
+                        <button type="button" class="whatsapp-check" id="validateWhatsApp">
+                            <i class="fab fa-whatsapp"></i> {{ __('Validate') }}
+                        </button>
+                        <div class="invalid-feedback" id="whatsAppFeedback"></div>
+                        <small class="form-text text-muted">Must include country code (e.g. 20 for Egypt, 1 for USA/Canada)</small>
+                    </div>
+
+                    <div class="form-group floating-label">
+                        <label for="address">{{ __('Address') }}</label>
+                        <input type="text" id="address" name="address" class="form-control @error('address') is-invalid @enderror" value="{{ old('address') }}" required>
+                        <div class="invalid-feedback" id="addressFeedback"></div>
+                    </div>
+
+                    <div class="form-group floating-label">
+                        <label for="password">{{ __('Password') }}</label>
+                        <input type="password" id="password" name="password" class="form-control @error('password') is-invalid @enderror" required>
+                        <div class="invalid-feedback" id="passwordFeedback"></div>
+                    </div>
+
+                    <div class="form-group floating-label">
+                        <label for="password_confirmation">{{ __('Confirm Password') }}</label>
+                        <input type="password" id="password_confirmation" name="password_confirmation" class="form-control" required>
+                        <div class="invalid-feedback" id="confirmPasswordFeedback"></div>
+                    </div>
+
+                    <div class="form-group file-upload">
+                        <label class="upload-label">
+                            <span class="upload-button"><i class="fas fa-cloud-upload-alt"></i> {{ __('Choose Profile Image') }}</span>
+                            <span class="file-name"></span>
+                            <input type="file" id="user_image" name="user_image" accept="image/*" required>
+                            <div class="invalid-feedback" id="imageFeedback"></div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <i class="fas fa-user-plus"></i> {{ __('Register') }}
+                    </button>
+                </div>
+            </form>
         </div>
-    </form>
+    </main>
 </div>
-</main>
-</div>
+
+<div id="notificationToast" class="toast"></div>
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('registrationForm');
+    const fields = {
+        full_name: { pattern: /^[a-zA-Z\s]{3,}$/, message: 'At least 3 letters' },
+        user_name: { pattern: /^[a-zA-Z0-9_]{3,}$/, message: '3+ chars (letters, numbers, _)' },
+        email: { pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Invalid email format' },
+        phone: { pattern: /^\d{10}$/, message: '10 digits required' },
+        whatsapp: { pattern: /^[1-9]\d{7,14}$/, message: 'Invalid WhatsApp number format' },
+        address: { pattern: /.{5,}/, message: 'At least 5 characters' },
+        password: {
+            pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+            message: '8+ chars with number & special'
+        },
+        password_confirmation: { pattern: null, message: 'Passwords do not match' },
+        user_image: { pattern: null, message: 'Profile image required' }
+    };
+
+    // Real-time Full Name Validation
+    document.getElementById('full_name').addEventListener('blur', async function() {
+        const fullName = this.value.trim();
+        const feedback = document.getElementById('fullNameFeedback');
+
+        if (!fields.full_name.pattern.test(fullName)) {
+            showValidation(feedback, 'At least 3 letters', false);
+            return;
+        }
+    });
+
+    // Real-time Username Validation
+    document.getElementById('user_name').addEventListener('blur', async function() {
+        const username = this.value.trim();
+        const feedback = document.getElementById('usernameFeedback');
+
+        if (!fields.user_name.pattern.test(username)) {
+            showValidation(feedback, 'At least 3 chars (letters, numbers, _)', false);
+            return;
+        }
+
+        try {
+            const response = await fetch('/check-username', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({ username: username })
+            });
+
+            const data = await response.json();
+            showValidation(feedback, data.message, data.valid);
+        } catch (error) {
+            showValidation(feedback, 'Validation service unavailable', false);
+        }
+    });
+
+    // Real-time Email Validation
+    document.getElementById('email').addEventListener('blur', async function() {
+        const email = this.value.trim();
+        const feedback = document.getElementById('emailFeedback');
+
+        if (!fields.email.pattern.test(email)) {
+            showValidation(feedback, 'Invalid email format', false);
+            return;
+        }
+
+        try {
+            const response = await fetch('/check-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({ email: email })
+            });
+
+            const data = await response.json();
+            showValidation(feedback, data.message, data.valid);
+        } catch (error) {
+            showValidation(feedback, 'Validation service unavailable', false);
+        }
+    });
+
+    // Real-time Field Validation
+    Object.entries(fields).forEach(([fieldId, config]) => {
+        const input = document.getElementById(fieldId);
+        if (!input) return;
+
+        input.addEventListener('blur', function() {
+            const value = this.value.trim();
+            const feedback = document.getElementById(`${fieldId}Feedback`);
+
+            if (fieldId === 'password_confirmation') {
+                const password = document.getElementById('password').value;
+                validateConfirmPassword(password, value);
+            } else if (config.pattern && !config.pattern.test(value)) {
+                showValidation(feedback, config.message, false);
+            } else {
+                showValidation(feedback, '', true);
+            }
+        });
+    });
+
+    function validateConfirmPassword(password, confirmPassword) {
+        const feedback = document.getElementById('confirmPasswordFeedback');
+        if (password !== confirmPassword) {
+            showValidation(feedback, 'Passwords do not match', false);
+            return false;
+        }
+        showValidation(feedback, '', true);
+        return true;
+    }
+
+    // WhatsApp Validation
+    document.getElementById('validateWhatsApp').addEventListener('click', async function(e) {
+        e.preventDefault();
+        const whatsappInput = document.getElementById('whatsapp');
+        const feedback = document.getElementById('whatsAppFeedback');
+        const number = whatsappInput.value.trim();
+
+        if (!fields.whatsapp.pattern.test(number)) {
+            showValidation(feedback, 'Invalid WhatsApp number format', false);
+            return;
+        }
+
+        try {
+            feedback.textContent = 'Validating...';
+            feedback.style.color = '#666';
+
+            const response = await fetch('/validate-whatsapp', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({ number: number })
+            });
+
+            const data = await response.json();
+            if (data.valid) {
+                showValidation(feedback, '✓ Valid WhatsApp number', true);
+            } else {
+                showValidation(feedback, data.message || 'Invalid WhatsApp number', false);
+                this.classList.add('invalid');
+                setTimeout(() => {
+                    this.classList.remove('invalid');
+                }, 500);
+            }
+        } catch (error) {
+            showValidation(feedback, 'Validation service unavailable', false);
+        }
+    });
+
+    // Form Submission Handler
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        let isValid = true;
+
+        // Clear previous validations
+        document.querySelectorAll('.invalid-feedback').forEach(el => {
+            el.textContent = '';
+            const input = el.previousElementSibling;
+            if (input) input.classList.remove('is-invalid', 'is-valid');
+        });
+
+        // Validate all fields
+        Object.entries(fields).forEach(([fieldId, config]) => {
+            const input = document.getElementById(fieldId);
+            const feedback = document.getElementById(`${fieldId}Feedback`);
+            const value = input.value.trim();
+
+            if (fieldId === 'password_confirmation') {
+                const password = document.getElementById('password').value;
+                if (password !== value) {
+                    showValidation(feedback, 'Passwords do not match', false);
+                    isValid = false;
+                }
+            } else if (input.required && !value) {
+                showValidation(feedback, 'This field is required', false);
+                isValid = false;
+            } else if (config.pattern && !config.pattern.test(value)) {
+                showValidation(feedback, config.message, false);
+                isValid = false;
+            }
+        });
+
+        const fileInput = document.getElementById('user_image');
+        const fileFeedback = document.getElementById('imageFeedback');
+        if (!fileInput.files[0]) {
+            showValidation(fileFeedback, 'Profile image is required', false);
+            isValid = false;
+        }
+
+        if (!isValid) return;
+
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+
+        try {
+            const formData = new FormData(form);
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                window.location.href = data.redirect;
+            } else {
+                Object.entries(data.errors || {}).forEach(([field, message]) => {
+                    const feedback = document.getElementById(`${field}Feedback`);
+                    if (feedback) showValidation(feedback, message, false);
+                });
+                if (data.message) showToast(data.message, 'error');
+            }
+        } catch (error) {
+            showToast('Network error - please try again', 'error');
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-user-plus"></i> {{ __("Register") }}';
+        }
+    });
+
+    function showValidation(element, message, isValid) {
+        if (!element) return;
+        element.textContent = message;
+        element.style.color = isValid ? '#28a745' : '#dc3545';
+        const input = element.previousElementSibling;
+        if (input) {
+            input.classList.toggle('is-valid', isValid);
+            input.classList.toggle('is-invalid', !isValid);
+        }
+    }
+
+    function showToast(message, type = 'success') {
+        const toast = document.getElementById('notificationToast');
+        toast.textContent = message;
+        toast.className = `toast ${type} show`;
+        setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+});
+</script>
+@endpush

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Services\WhatsAppValidationService;
+use Illuminate\Support\Facades\Log;
 
 class APIController extends Controller
 {
@@ -34,13 +35,20 @@ class APIController extends Controller
 
     public function validateWhatsApp(Request $request, WhatsAppValidationService $service)
     {
-        $validated = $request->validate(['number' => 'required|numeric']);
+        try {
+            $validated = $request->validate(['number' => 'required|numeric']);
 
-        $result = $service->validateNumber($validated['number']);
+            $result = $service->validateNumber($validated['number']);
 
-        return response()->json([
-            'valid' => $result['status'] === 'valid',
-            'message' => $result['message']
-        ]);
+            Log::info('WhatsApp validation result:', $result);
+
+            return response()->json($result);
+        } catch (\Exception $e) {
+            Log::error('WhatsApp validation error in controller: ' . $e->getMessage());
+            return response()->json([
+                'valid' => false,
+                'message' => 'Validation service unavailable'
+            ], 500);
+        }
     }
 }
