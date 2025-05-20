@@ -7,21 +7,32 @@ use App\Http\Requests\RegistrationRequest;
 use App\Models\User;
 use App\Services\FileUploadService;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 use Exception;
 
 class RegistrationController extends Controller
 {
+    protected $fileUploader;
+
+    public function __construct(FileUploadService $fileUploader)
+    {
+        $this->fileUploader = $fileUploader;
+    }
+
     public function show()
     {
         return view('registration.index');
     }
 
-    public function store(RegistrationRequest $request, FileUploadService $uploader)
+    public function store(RegistrationRequest $request)
     {
         try {
+            if (!$request->hasFile('user_image')) {
+                throw new Exception('No image file was uploaded');
+            }
+
             // Handle file upload
-            // $filename = $this->fileUploader->upload($request->file('user_image'));
-            $filename = $uploader->upload($request->file('user_image'));
+            $filename = $this->fileUploader->upload($request->file('user_image'));
 
             // Create user
             $user = User::create([
@@ -35,20 +46,24 @@ class RegistrationController extends Controller
                 'user_image' => $filename,
             ]);
 
-            // Send email
-                    // Send email
-        Mail::send('emails.new_user', ['user' => $user], function ($message) {
-            $message->to(config('mail.admin_email'))
-                    ->subject(__('New Registered User'));
-        });
+            // Send email if admin email is configured
+            if (config('mail.admin_email')) {
+                try {
+                    Mail::send('emails.new_user', ['user' => $user], function ($message) {
+                        $message->to(config('mail.admin_email'))
+                                ->subject(__('New Registered User'));
+                    });
+                } catch (Exception $e) {
+                    Log::error('Failed to send registration email: ' . $e->getMessage());
+                }
+            }
 
-        $user->save();
-
-        return redirect()->route('registration.success')
+            return redirect()->route('registration.success')
                             ->with('success', __('registration.success', ['name' => $user->full_name]));
 
         } catch (Exception $e) {
-            return back()->with('error', $e->getMessage());
+            Log::error('Registration failed: ' . $e->getMessage());
+            return back()->with('error', $e->getMessage())->withInput();
         }
     }
 

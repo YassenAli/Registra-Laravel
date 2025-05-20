@@ -789,11 +789,9 @@ main.form-page-container.dark-theme.awesome-success-bg {
 }
 
 @keyframes shake {
-    0% { transform: translateX(0); }
-    25% { transform: translateX(5px); }
-    50% { transform: translateX(-5px); }
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
     75% { transform: translateX(5px); }
-    100% { transform: translateX(0); }
 }
 
 /* Input group styling */
@@ -821,4 +819,20 @@ main.form-page-container.dark-theme.awesome-success-bg {
     .form-group .form-control {
         padding-right: 15px;
     }
+}
+
+.whatsapp-feedback {
+    margin-top: 5px;
+    font-size: 0.875rem;
+    transition: color 0.3s ease;
+}
+
+.whatsapp-check.invalid {
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
 }

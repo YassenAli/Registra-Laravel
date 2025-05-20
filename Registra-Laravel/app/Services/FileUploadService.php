@@ -2,16 +2,24 @@
 
 namespace App\Services;
 
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
-class FileUploadService {
-    public function upload($file, $directory = 'uploads')
+class FileUploadService
+{
+    public function upload(UploadedFile $file)
     {
-        $extension = $file->extension();
-        $filename = uniqid().'_'.bin2hex(random_bytes(8)).'.'.$extension;
+        // Generate a unique filename
+        $filename = time() . '_' . $file->getClientOriginalName();
 
-        $path = $file->storeAs($directory, $filename, 'public');
+        // Store the file in the public disk under uploads directory
+        $path = $file->storeAs('uploads', $filename, 'public');
 
+        if (!$path) {
+            throw new \Exception('Failed to upload file');
+        }
+
+        // Return the filename for database storage
         return $filename;
     }
 }
