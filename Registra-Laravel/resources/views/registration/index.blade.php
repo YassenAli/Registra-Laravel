@@ -310,6 +310,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: formData
             });
 
+            if (response.redirected) {
+                window.location.href = response.url;
+                return;
+            }
+
             const data = await response.json();
             if (data.success) {
                 window.location.href = data.redirect;
