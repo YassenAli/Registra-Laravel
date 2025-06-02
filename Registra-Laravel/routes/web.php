@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\APIController;
+use App\Http\Controllers\ContactController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -25,6 +26,9 @@ Route::get('/success', function () {
 Route::view('/about', 'about')->name('about');
 Route::view('/contact', 'contact')->name('contact');
 Route::view('/info', 'info')->name('info');
+
+// Contact form submission
+Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
 
 // Route::middleware(['locale'])->group(function () {
 //     // Main routes
