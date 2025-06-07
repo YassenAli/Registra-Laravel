@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
-@section('title', __('Registration'))
+@section('title', __('messages.register.title'))
 
 @section('content')
+
+
 <div class="content-wrapper">
     <main class="registration-main form-page-container">
         <div class="registration-container animate__animated animate__fadeIn form-wrapper">
@@ -21,7 +23,7 @@
             @endif
 
             <div class="form-header">
-                <h2>Register</h2>
+                <h2>{{ __('messages.register.heading') }}</h2>
             </div>
 
             <form id="registrationForm" action="{{ route('registration.submit') }}" method="POST" enctype="multipart/form-data">
@@ -29,60 +31,60 @@
 
                 <div class="form-grid">
                     <div class="form-group floating-label">
-                        <label for="full_name">{{ __('Full Name') }}</label>
+                        <label for="full_name">{{ __('messages.register.full_name') }}</label>
                         <input type="text" id="full_name" name="full_name" class="form-control @error('full_name') is-invalid @enderror" value="{{ old('full_name') }}" required>
                         <div class="invalid-feedback" id="fullNameFeedback"></div>
                     </div>
 
                     <div class="form-group floating-label">
-                        <label for="user_name">{{ __('Username') }}</label>
+                        <label for="user_name">{{ __('messages.register.username') }}</label>
                         <input type="text" id="user_name" name="user_name" class="form-control @error('user_name') is-invalid @enderror" value="{{ old('user_name') }}" required>
                         <div class="invalid-feedback" id="usernameFeedback"></div>
                     </div>
 
                     <div class="form-group floating-label">
-                        <label for="email">{{ __('Email Address') }}</label>
+                        <label for="email">{{ __('messages.register.email') }}</label>
                         <input type="email" id="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" required>
                         <div class="invalid-feedback" id="emailFeedback"></div>
                     </div>
 
                     <div class="form-group floating-label">
-                        <label for="phone">{{ __('Phone') }}</label>
+                        <label for="phone">{{ __('messages.register.phone') }}</label>
                         <input type="text" id="phone" name="phone" class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone') }}" required>
                         <div class="invalid-feedback" id="phoneFeedback"></div>
                     </div>
 
                     <div class="form-group floating-label">
-                        <label for="whatsapp">{{ __('WhatsApp Number') }}</label>
+                        <label for="whatsapp">{{ __('messages.register.whatsapp') }}</label>
                         <input type="text" id="whatsapp" name="whatsapp" class="form-control @error('whatsapp') is-invalid @enderror" value="{{ old('whatsapp') }}" required>
                         <button type="button" class="whatsapp-check" id="validateWhatsApp">
-                            <i class="fab fa-whatsapp"></i> {{ __('Validate') }}
+                            <i class="fab fa-whatsapp"></i> {{ __('messages.register.validate') }}
                         </button>
                         <div class="invalid-feedback" id="whatsAppFeedback"></div>
-                        <small class="form-text text-muted">Must include country code (e.g. 20 for Egypt, 1 for USA/Canada)</small>
+                        <small class="form-text text-muted">{{ __('messages.register.upload_note') }}</small>
                     </div>
 
                     <div class="form-group floating-label">
-                        <label for="address">{{ __('Address') }}</label>
+                        <label for="address">{{ __('messages.register.address') }}</label>
                         <input type="text" id="address" name="address" class="form-control @error('address') is-invalid @enderror" value="{{ old('address') }}" required>
                         <div class="invalid-feedback" id="addressFeedback"></div>
                     </div>
 
                     <div class="form-group floating-label">
-                        <label for="password">{{ __('Password') }}</label>
+                        <label for="password">{{ __('messages.register.password') }}</label>
                         <input type="password" id="password" name="password" class="form-control @error('password') is-invalid @enderror" required>
                         <div class="invalid-feedback" id="passwordFeedback"></div>
                     </div>
 
                     <div class="form-group floating-label">
-                        <label for="password_confirmation">{{ __('Confirm Password') }}</label>
+                        <label for="password_confirmation">{{ __('messages.register.confirm_password') }}</label>
                         <input type="password" id="password_confirmation" name="password_confirmation" class="form-control" required>
                         <div class="invalid-feedback" id="confirmPasswordFeedback"></div>
                     </div>
 
                     <div class="form-group file-upload">
                         <label class="upload-label">
-                            <span class="upload-button"><i class="fas fa-cloud-upload-alt"></i> {{ __('Choose Profile Image') }}</span>
+                            <span class="upload-button"><i class="fas fa-cloud-upload-alt"></i> {{ __('messages.register.upload') }}</span>
                             <span class="file-name"></span>
                             <input type="file" id="user_image" name="user_image" accept="image/*" required>
                             <div class="invalid-feedback" id="imageFeedback"></div>
@@ -92,7 +94,7 @@
 
                 <div class="form-actions">
                     <button type="submit" class="submit-btn" id="submitBtn">
-                        <i class="fas fa-user-plus"></i> {{ __('Register') }}
+                        <i class="fas fa-user-plus"></i> {{ __('messages.register.submit') }}
                     </button>
                 </div>
             </form>
@@ -103,23 +105,36 @@
 <div id="notificationToast" class="toast"></div>
 @endsection
 
+
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('registrationForm');
+   const trans = {
+        full_name: "{{ __('messages.validation.full_name') }}",
+        user_name: "{{ __('messages.validation.user_name') }}",
+        email: "{{ __('messages.validation.email') }}",
+        phone: "{{ __('messages.validation.phone') }}",
+        whatsapp: "{{ __('messages.validation.whatsapp') }}",
+        address: "{{ __('messages.validation.address') }}",
+        password: "{{ __('messages.validation.password') }}",
+        password_confirmation: "{{ __('messages.validation.password_confirmation') }}",
+        user_image: "{{ __('messages.validation.user_image') }}",
+    };
+
     const fields = {
-        full_name: { pattern: /^[a-zA-Z\s]{3,}$/, message: 'At least 3 letters' },
-        user_name: { pattern: /^[a-zA-Z0-9_]{3,}$/, message: '3+ chars (letters, numbers, _)' },
-        email: { pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Invalid email format' },
-        phone: { pattern: /^\d{10}$/, message: '10 digits required' },
-        whatsapp: { pattern: /^[1-9]\d{7,14}$/, message: 'Invalid WhatsApp number format' },
-        address: { pattern: /.{5,}/, message: 'At least 5 characters' },
+        full_name: { pattern: /^[a-zA-Z\s]{3,}$/, message: trans.full_name },
+        user_name: { pattern: /^[a-zA-Z0-9_]{3,}$/, message: trans.user_name },
+        email: { pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: trans.email },
+        phone: { pattern: /^\d{10}$/, message: trans.phone },
+        whatsapp: { pattern: /^[1-9]\d{7,14}$/, message: trans.whatsapp },
+        address: { pattern: /.{5,}/, message: trans.address },
         password: {
             pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-            message: '8+ chars with number & special'
+            message: trans.password
         },
-        password_confirmation: { pattern: null, message: 'Passwords do not match' },
-        user_image: { pattern: null, message: 'Profile image required' }
+        password_confirmation: { pattern: null, message: trans.password_confirmation },
+        user_image: { pattern: null, message: trans.user_image }
     };
 
     // Real-time Full Name Validation

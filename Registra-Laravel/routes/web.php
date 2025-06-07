@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\APIController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\LanguageController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -21,6 +22,9 @@ Route::post('/register', [RegistrationController::class, 'store'])->name('regist
 Route::get('/success', function () {
     return view('registration.success');
 })->name('registration.success');
+Route::post('/change-language', [App\Http\Controllers\LanguageController::class, 'changeLanguage'])->name('change.language');
+
+
 
 // Static pages
 Route::view('/about', 'about')->name('about');
@@ -49,3 +53,6 @@ Route::post('/contact', [ContactController::class, 'submit'])->name('contact.sub
 Route::post('/check-username', [APIController::class, 'checkUsername']);
 Route::post('/check-email', [APIController::class, 'checkEmail']);
 Route::post('/validate-whatsapp', [APIController::class, 'validateWhatsApp']);
+
+Route::post('/change-language', [App\Http\Controllers\LanguageController::class, 'changeLanguage'])->name('change.language');
+

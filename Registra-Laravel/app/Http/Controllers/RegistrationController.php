@@ -47,7 +47,7 @@ class RegistrationController extends Controller
             ]);
 
             // Send email if admin email is configured
-            if (config('mail.admin_email')) {
+             if (config('mail.admin_email')) {
                 try {
                     Mail::send('emails.new_user', ['user' => $user], function ($message) {
                         $message->to(config('mail.admin_email'))
@@ -57,7 +57,6 @@ class RegistrationController extends Controller
                     Log::error('Failed to send registration email: ' . $e->getMessage());
                 }
             }
-
             return redirect()->route('registration.success')
                             ->with('success', __('registration.success', ['name' => $user->full_name]));
 
