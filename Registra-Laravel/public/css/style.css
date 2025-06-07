@@ -194,7 +194,7 @@ header nav ul li a:hover::after {
     opacity: 1;
 }
 
-/* ========== لغة الترجمة (آخر الهيدر) ========== */
+/* ========== language-select ========== */
 .language-switcher {
     position: absolute;
     right: 20px;
