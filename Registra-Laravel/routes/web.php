@@ -22,6 +22,7 @@ Route::post('/register', [RegistrationController::class, 'store'])->name('regist
 Route::get('/success', function () {
     return view('registration.success');
 })->name('registration.success');
+Route::get('lang/change', [LanguageController::class, 'change'])->name('change_lang');
 Route::post('/change-language', [App\Http\Controllers\LanguageController::class, 'changeLanguage'])->name('change.language');
 
 

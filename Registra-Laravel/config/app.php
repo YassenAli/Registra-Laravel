@@ -78,12 +78,9 @@ return [
     |
     */
 
-   
     'locale' => 'en',
-    'available_locales' => [
-        'en' => 'English',
-        'ar' => 'العربية',
-    ],
+    'fallback_locale' => 'en',
+    'available_locales' => ['en', 'ar'],
     /*
     |--------------------------------------------------------------------------
     | Encryption Key
