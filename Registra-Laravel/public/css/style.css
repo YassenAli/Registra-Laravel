@@ -118,7 +118,6 @@ header .container {
     align-items: center;
 }
 
-
 header .logo {
     display: flex;
     align-items: center;
@@ -194,6 +193,45 @@ header nav ul li a:hover::after {
     width: 100%;
     opacity: 1;
 }
+
+/* ========== language-select ========== */
+.language-switcher {
+    position: absolute;
+    right: 20px;
+}
+
+.language-switcher select.language-select {
+    padding: 6px 12px 6px 30px;
+    border: none;
+    border-radius: 20px;
+    background-color: #222;
+    color: #fff;
+    font-size: 14px;
+    appearance: none;
+    background-image: url('https://img.icons8.com/ios-filled/20/ffffff/globe--v1.png');
+    background-repeat: no-repeat;
+    background-position: 8px center;
+    background-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.language-switcher select.language-select:hover,
+.language-switcher select.language-select:focus {
+    background-color: #333;
+    outline: none;
+}
+
+@media (max-width: 768px) {
+    .language-switcher {
+        position: static;
+        margin-top: 10px;
+        width: 100%;
+        text-align: left;
+    }
+}
+
+
 
 
 /* --- Footer Styles --- */
@@ -349,7 +387,7 @@ main.container {
 /* --- Registration Form Page Styles (Funky & New - Light Background) --- */
 
 main.form-page-container {
-    padding: 4rem 0;
+    padding: 7rem 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -366,21 +404,23 @@ main.form-page-container {
     position: relative;
     border: 1px solid #eaeaea;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    
 }
 
 .form-wrapper::before {
     content: '';
     position: absolute;
     top: -8px;
-    left: -8px;
-    right: 8px;
-    bottom: 8px;
-    border: 3px solid var(--gold-color);
+    left: 0px;         
+    right: -6px;      
+    bottom:-10px;
+    border: 5px solid var(--gold-color);
     border-radius: 4px;
     z-index: -1;
     pointer-events: none;
     transition: all 0.3s ease-out;
 }
+
 
 .form-wrapper:hover::before {
     top: -10px;
@@ -564,6 +604,7 @@ main.form-page-container.dark-theme.awesome-success-bg {
     background: linear-gradient(-45deg, var(--near-black), #23272d, #181b1f, var(--black));
     background-size: 400% 400%;
     animation: gradientBG 18s ease infinite;
+    
 }
 
 @keyframes gradientBG {
@@ -587,6 +628,7 @@ main.form-page-container.dark-theme.awesome-success-bg {
     position: relative;
     z-index: 1;
     animation: awesomeCardEnter 0.8s 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) backwards;
+    
 
 }
 
@@ -608,6 +650,7 @@ main.form-page-container.dark-theme.awesome-success-bg {
     filter: blur(5px);
     z-index: -1;
     animation: pulseShape 4s ease-in-out infinite alternate;
+    
 }
 .graphic-shape.shape-1 {
     width: 100px; height: 100px; top: -30px; left: -40px; animation-delay: 0.2s;

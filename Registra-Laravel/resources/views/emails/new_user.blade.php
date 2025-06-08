@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>{{ __('New User Registration') }}</title>
+    <title>{{ __('messages.new_user_registration') }}</title>
 </head>
+
 <body>
-    <h2>{{ __('New User Registration') }}</h2>
-    <p>{{ __('A new user has registered:') }}</p>
+    <h2>{{ __('messages.new_user_registration') }}</h2>
+    <p>{{ __('messages.new_user_registered') }}</p>
     <ul>
-        <li>{{ __('Name') }}: {{ $user->full_name }}</li>
-        <li>{{ __('Username') }}: {{ $user->user_name }}</li>
-        <li>{{ __('Email') }}: {{ $user->email }}</li>
+        <li>{{ __('messages.name') }}: {{ $user->full_name }}</li>
+        <li>{{ __('messages.username') }}: {{ $user->user_name }}</li>
+        <li>{{ __('messages.email') }}: {{ $user->email }}</li>
     </ul>
 </body>
+
 </html>
