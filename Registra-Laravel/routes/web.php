@@ -30,6 +30,3 @@ Route::post('/contact', [ContactController::class, 'submit'])->name('contact.sub
 Route::post('/check-username', [APIController::class, 'checkUsername']);
 Route::post('/check-email', [APIController::class, 'checkEmail']);
 Route::post('/validate-whatsapp', [APIController::class, 'validateWhatsApp']);
-
-Route::post('/change-language', [App\Http\Controllers\LanguageController::class, 'changeLanguage'])->name('change.language');
-
