@@ -1,10 +1,4 @@
 <!DOCTYPE html>
-<<<<<<< Updated upstream
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-=======
-
-
->>>>>>> Stashed changes
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
