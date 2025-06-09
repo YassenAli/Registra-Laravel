@@ -1,56 +1,26 @@
-<<<<<<< Updated upstream
-<header class="main-header">
-    <div class="container">
-=======
 <header class="header">
     <div class="container">
         <!-- Logo -->
->>>>>>> Stashed changes
         <a href="{{ route('home') }}" class="logo">
             <img src="{{ asset('images/logo.png') }}" alt="Registra Logo" class="logo-img">
         </a>
 
-<<<<<<< Updated upstream
-       <form method="POST" action="{{ route('change.language') }}" class="language-switcher">
-    @csrf
-    <select name="locale" onchange="this.form.submit()" class="language-select">
-        <option value="en" {{ app()->getLocale() == 'en' ? 'selected' : '' }}>English</option>
-        <option value="ar" {{ app()->getLocale() == 'ar' ? 'selected' : '' }}>العربية</option>
-    </select>
-</form>
-
-
-        <nav class="main-nav">
-            <ul class="nav-list">
-                <li class="nav-item">
-                    <a href="{{ route('home') }}" class="nav-link {{ active_class(if_route('home')) }}">
-                        <i class="fas fa-home"></i> {{ __('messages.nav.home') }}
-=======
         <!-- Navigation -->
         <nav class="nav">
             <ul class="nav-list">
                 <li class="nav-item">
                     <a href="{{ route('home') }}" class="nav-link {{ active_class(if_route('home')) }}">
                         <i class="fas fa-home"></i> {{ __('messages.home') }}
->>>>>>> Stashed changes
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('about') }}" class="nav-link {{ active_class(if_route('about')) }}">
-<<<<<<< Updated upstream
-                        <i class="fas fa-info-circle"></i> {{ __('messages.nav.about') }}
-=======
                         <i class="fas fa-info-circle"></i> {{ __('messages.about') }}
->>>>>>> Stashed changes
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('contact') }}" class="nav-link {{ active_class(if_route('contact')) }}">
-<<<<<<< Updated upstream
-                        <i class="fas fa-envelope"></i> {{ __('messages.nav.contact') }}
-=======
                         <i class="fas fa-envelope"></i> {{ __('messages.contact') }}
->>>>>>> Stashed changes
                     </a>
                 </li>
             </ul>
@@ -77,11 +47,9 @@
         </form>
     </div>
 </header>
-<<<<<<< Updated upstream
-=======
 <style>
     .nav-link {
-    color: var(--text-on-dark); /* لون النص أبيض أو حسب متغيرك */
+    color: var(--text-on-dark); 
     font-weight: 500;
     font-size: 1.05em;
     display: flex;
@@ -128,9 +96,7 @@
 }
 
 .nav-list li.nav-item:last-child {
-    margin-right: 40px; /* أو القيمة اللي تناسبك */
+    margin-right: 40px; 
 }
 
-
 </style>
->>>>>>> Stashed changes
