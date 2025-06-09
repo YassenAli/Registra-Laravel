@@ -47,7 +47,7 @@ class RegistrationController extends Controller
             ]);
 
             // Send email if admin email is configured
-             if (config('mail.admin_email')) {
+            if (config('mail.admin_email')) {
                 try {
                     Mail::send('emails.new_user', ['user' => $user], function ($message) {
                         $message->to(config('mail.admin_email'))
@@ -65,33 +65,4 @@ class RegistrationController extends Controller
             return back()->with('error', $e->getMessage())->withInput();
         }
     }
-
-    // public function store(RegistrationRequest $request, FileUploadService $uploader)
-    // {
-    //     $validated = $request->validated();
-
-    //     // Upload file
-    //     $filename = $uploader->upload($request->file('user_image'));
-
-    //     // Create user
-    //     $user = User::create([
-    //         'full_name' => $validated['full_name'],
-    //         'user_name' => $validated['user_name'],
-    //         'email' => $validated['email'],
-    //         'phone' => $validated['phone'],
-    //         'whatsapp' => $validated['whatsapp'],
-    //         'address' => $validated['address'],
-    //         'password' => bcrypt($validated['password']),
-    //         'user_image' => $filename,
-    //     ]);
-
-    //     // Send email
-    //     Mail::send('emails.new_user', ['user' => $user], function ($message) {
-    //         $message->to(config('mail.admin_email'))
-    //                 ->subject(__('New Registered User'));
-    //     });
-
-    //     return redirect()->route('registration.success')
-    //                         ->with('success', __('registration.success', ['name' => $user->full_name]));
-    // }
 }
