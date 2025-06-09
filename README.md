@@ -73,3 +73,7 @@ This project is created for educational purposes as part of the Web Development 
 ## 🙏 Acknowledgments
 
 - [Laravel Documentation](https://laravel.com/docs/12.x)
+
+## 🎥 Demo
+
+Watch the project demonstration video: [Project Demo](https://drive.google.com/file/d/14zmABQsh_neueoTKsiBZODHE6gi29vBA/view?usp=drive_link)
