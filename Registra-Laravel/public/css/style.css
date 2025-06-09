@@ -406,15 +406,15 @@ main.form-page-container {
     position: relative;
     border: 1px solid #eaeaea;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-    
+
 }
 
 .form-wrapper::before {
     content: '';
     position: absolute;
     top: -8px;
-    left: 0px;         
-    right: -6px;      
+    left: 0px;
+    right: -6px;
     bottom:-10px;
     border: 5px solid var(--gold-color);
     border-radius: 4px;
@@ -606,7 +606,7 @@ main.form-page-container.dark-theme.awesome-success-bg {
     background: linear-gradient(-45deg, var(--near-black), #23272d, #181b1f, var(--black));
     background-size: 400% 400%;
     animation: gradientBG 18s ease infinite;
-    
+
 }
 
 @keyframes gradientBG {
@@ -630,7 +630,7 @@ main.form-page-container.dark-theme.awesome-success-bg {
     position: relative;
     z-index: 1;
     animation: awesomeCardEnter 0.8s 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) backwards;
-    
+
 
 }
 
@@ -652,7 +652,7 @@ main.form-page-container.dark-theme.awesome-success-bg {
     filter: blur(5px);
     z-index: -1;
     animation: pulseShape 4s ease-in-out infinite alternate;
-    
+
 }
 .graphic-shape.shape-1 {
     width: 100px; height: 100px; top: -30px; left: -40px; animation-delay: 0.2s;
@@ -818,13 +818,15 @@ main.form-page-container.dark-theme.awesome-success-bg {
 
 /* Validation states */
 .whatsapp-check.valid {
-    background-color:rgba(40, 167, 70, 0.51);
+    background-color: #28a745;
     animation: pulseValid 0.5s ease;
+    box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
 }
 
 .whatsapp-check.invalid {
-    background-color:rgba(220, 53, 70, 0.69);
+    background-color: #dc3545;
     animation: shake 0.5s ease;
+    box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
 }
 
 @keyframes pulseValid {
@@ -851,6 +853,11 @@ main.form-page-container.dark-theme.awesome-success-bg {
 #whatsAppFeedback {
     margin-top: 5px;
     font-size: 0.9em;
+    transition: color 0.3s ease;
+}
+
+#whatsAppFeedback:has(✓) {
+    color: #28a745;
 }
 
 /* Mobile responsive */
@@ -866,18 +873,51 @@ main.form-page-container.dark-theme.awesome-success-bg {
     }
 }
 
+/* WhatsApp validation feedback styles */
 .whatsapp-feedback {
     margin-top: 5px;
     font-size: 0.875rem;
     transition: color 0.3s ease;
 }
 
-.whatsapp-check.invalid {
-    animation: shake 0.5s;
+.whatsapp-feedback.valid {
+    color: #28a745;
 }
 
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
+.whatsapp-feedback.invalid {
+    color: #dc3545;
+}
+
+.valid-feedback {
+    color: #28a745;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 500;
+}
+
+.valid-feedback::before {
+    content: '✓';
+    font-weight: bold;
+}
+
+.whatsapp-instructions {
+    transition: opacity 0.3s ease;
+}
+
+/* Input validation states */
+.form-control.is-valid {
+    border-color: #28a745 !important;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%2328a745' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}
+
+.form-control.is-invalid {
+    border-color: #dc3545 !important;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23dc3545' viewBox='-2 -2 7 7'%3e%3cpath stroke='%23dc3545' d='M0 0l3 3m0-3L0 3'/%3e%3ccircle r='.5'/%3e%3ccircle cx='3' r='.5'/%3e%3ccircle cy='3' r='.5'/%3e%3ccircle cx='3' cy='3' r='.5'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
 }

@@ -70,7 +70,7 @@
                                 <i class="fab fa-whatsapp"></i> {{ __('messages.validate') }}
                             </button>
                             <div class="invalid-feedback" id="whatsAppFeedback"></div>
-                            <small class="form-text text-muted">{{ __('messages.whatsapp_instructions') }}</small>
+                            <small class="form-text text-muted whatsapp-instructions">{{ __('messages.whatsapp_instructions') }}</small>
                         </div>
 
                         <div class="form-group floating-label">
@@ -238,16 +238,23 @@
                 e.preventDefault();
                 const whatsappInput = document.getElementById('whatsapp');
                 const feedback = document.getElementById('whatsAppFeedback');
+                const validateButton = this;
+                const instructions = document.querySelector('.whatsapp-instructions');
                 const number = whatsappInput.value.trim();
 
                 if (!fields.whatsapp.pattern.test(number)) {
-                    showValidation(feedback, fields.whatsapp.message, false);
+                    feedback.innerHTML = fields.whatsapp.message;
+                    feedback.style.color = '#dc3545';
+                    validateButton.classList.remove('valid');
+                    validateButton.classList.add('invalid');
+                    instructions.style.display = 'block';
                     return;
                 }
 
                 try {
-                    feedback.textContent = '{{ __("messages.validating") }}';
+                    feedback.innerHTML = '{{ __("messages.validating") }}';
                     feedback.style.color = '#666';
+                    validateButton.classList.remove('valid', 'invalid');
 
                     const response = await fetch('/validate-whatsapp', {
                         method: 'POST',
@@ -260,16 +267,28 @@
 
                     const data = await response.json();
                     if (data.valid) {
-                        showValidation(feedback, '✓ {{ __("messages.valid_whatsapp") }}', true);
+                        feedback.innerHTML = '<span class="valid-feedback">✓ {{ __("messages.valid_whatsapp") }}</span>';
+                        feedback.style.color = '#28a745';
+                        validateButton.classList.remove('invalid');
+                        validateButton.classList.add('valid');
+                        whatsappInput.classList.remove('is-invalid');
+                        whatsappInput.classList.add('is-valid');
+                        instructions.style.display = 'none';
                     } else {
-                        showValidation(feedback, data.message || '{{ __("messages.invalid_whatsapp") }}', false);
-                        this.classList.add('invalid');
-                        setTimeout(() => {
-                            this.classList.remove('invalid');
-                        }, 500);
+                        feedback.innerHTML = data.message || '{{ __("messages.invalid_whatsapp") }}';
+                        feedback.style.color = '#dc3545';
+                        validateButton.classList.remove('valid');
+                        validateButton.classList.add('invalid');
+                        whatsappInput.classList.remove('is-valid');
+                        whatsappInput.classList.add('is-invalid');
+                        instructions.style.display = 'block';
                     }
                 } catch (error) {
-                    showValidation(feedback, '{{ __("messages.validation_service_unavailable") }}', false);
+                    feedback.innerHTML = '{{ __("messages.validation_service_unavailable") }}';
+                    feedback.style.color = '#dc3545';
+                    validateButton.classList.remove('valid');
+                    validateButton.classList.add('invalid');
+                    instructions.style.display = 'block';
                 }
             });
 

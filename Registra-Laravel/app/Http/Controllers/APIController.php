@@ -17,7 +17,7 @@ class APIController extends Controller
 
         return response()->json([
             'valid' => !$exists,
-            'message' => $exists ? __('validation.username_taken') : __('validation.username_available')
+            'message' => $exists ? __('Username is already taken') : __('Username is Available')
         ]);
     }
 
@@ -29,7 +29,7 @@ class APIController extends Controller
 
         return response()->json([
             'valid' => !$exists,
-            'message' => $exists ? __('validation.email_taken') : __('validation.email_available')
+            'message' => $exists ? __('Email is already taken') : __('Email is available')
         ]);
     }
 
